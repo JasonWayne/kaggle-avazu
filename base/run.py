@@ -17,6 +17,9 @@ for category in ['app', 'site']:
     cmd = 'util/parallelizer.py -s 12 converter/2.py tr.r{size}.{category}.new.csv va.r{size}.{category}.new.csv tr.r{size}.{category}.sp va.r{size}.{category}.sp'.format(size=size, category=category)
     subprocess.call(cmd.split())
 
+# -r: learning rate
+# -s: number of threads
+# -t: iteration
 cmd = './mark1 -r 0.03 -s 1 -t 13 va.r{size}.app.sp tr.r{size}.app.sp'.format(size=size) 
 subprocess.call(cmd.split())
 cmd = './mark1 -r 0.03 -s 1 -t 17 va.r{size}.site.sp tr.r{size}.site.sp'.format(size=size) 
