@@ -1,0 +1,13 @@
+base/tr*
+base/va*
+base/mark1
+base/base*
+
+base.r*
+tr*
+va*
+
+.idea/
+*__pycache__*
+*/mark1
+base/mark/mark1/mark1
