@@ -13,8 +13,10 @@ from math import exp, log, sqrt
 ##############################################################################
 
 # A, paths
-train = 'base/tr.r0.app.sp'
-test = 'base/va.r0.app.sp'                 # path to testing file
+# train = 'base/tr.r0.app.sp'
+# test = 'base/va.r0.app.sp'                 # path to testing file
+train = 'base/tr.r0.site.sp'
+test = 'base/va.r0.site.sp'                 # path to testing file
 submission = 'submission.csv'  # path of to be outputted submission file
 
 # B, model
@@ -29,7 +31,7 @@ D = 1000000
 do_interactions = False  # whether to enable poly2 feature interactions
 
 # D, training/validation
-epoch = 1      # learn training data for N passes
+epoch = 3      # learn training data for N passes
 holdout = 100  # use every N training instance for holdout validation
 
 
