@@ -13,9 +13,9 @@ from math import exp, log, sqrt
 ##############################################################################
 
 # A, paths
-train = 'train_rev2'               # path to training file
-test = 'test_rev2'                 # path to testing file
-submission = 'submission1234.csv'  # path of to be outputted submission file
+train = 'base/tr.r0.app.sp'
+test = 'base/va.r0.app.sp'                 # path to testing file
+submission = 'submission.csv'  # path of to be outputted submission file
 
 # B, model
 alpha = .1  # learning rate
@@ -24,7 +24,8 @@ L1 = 1.     # L1 regularization, larger value means more regularized
 L2 = 1.     # L2 regularization, larger value means more regularized
 
 # C, feature/hash trick
-D = 2 ** 20              # number of weights to use
+# D = 2 ** 20              # number of weights to use
+D = 1000000
 do_interactions = False  # whether to enable poly2 feature interactions
 
 # D, training/validation
@@ -232,25 +233,21 @@ def data(path, D):
             y: y = 1 if we have a click, else we have y = 0
     '''
 
-    for t, row in enumerate(DictReader(open(path))):
+    row_length = -1
+    for t, line in enumerate(open(path)):
+        line = line.strip().split(" ")
+        if row_length == -1:
+            row_length = len(line)
         # process id
-        ID = row['id']
-        del row['id']
+        ID = line[0]
 
         # process clicks
-        y = 0.
-        if 'click' in row:
-            if row['click'] == '1':
-                y = 1.
-            del row['click']
-
-        # turn hour really into hour, it was originally YYMMDDHH
-        row['hour'] = row['hour'][6:]
+        y = float(line[1])
 
         # build x
         x = [0]  # 0 is the index of the bias term
-        for key in sorted(row):  # sort is for preserving feature ordering
-            value = row[key]
+        for key in xrange(2, row_length):  # sort is for preserving feature ordering
+            value = line[key]
 
             # one-hot encode everything with hash trick
             index = abs(hash(key + '_' + value)) % D
