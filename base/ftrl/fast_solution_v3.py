@@ -250,7 +250,7 @@ def data(path, D):
             value = line[key]
 
             # one-hot encode everything with hash trick
-            index = abs(hash(key + '_' + value)) % D
+            index = abs(hash(str(key) + '_' + value)) % D
             x.append(index)
 
         yield t, ID, x, y
