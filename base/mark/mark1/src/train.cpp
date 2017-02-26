@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <stdexcept>
+#include <cstring>
 #include <omp.h>
 
 #include "common.h"
@@ -12,11 +13,12 @@ struct Option
 {
     Option() 
         : eta(0.1f), lambda(0.00002f), iter(15), nr_factor(4), nr_factor_real(4), 
-          nr_threads(1), do_prediction(true) {}
+          nr_threads(1), do_prediction(true), try_interaction(false) {}
     std::string Tr_path, Va_path;
     float eta, lambda;
     uint32_t iter, nr_factor, nr_factor_real, nr_threads;
     bool do_prediction;
+    bool try_interaction;
 };
 
 std::string train_help()
@@ -159,6 +161,7 @@ void train(Problem const &Tr, Problem const &Va, Model &model, Option const &opt
     }
 }
 
+
 } //unnamed namespace
 
 int main(int const argc, char const * const * const argv)
@@ -177,6 +180,7 @@ int main(int const argc, char const * const * const argv)
     std::cout << "reading data..." << std::flush;
     Problem const Va = read_problem(opt.Va_path);
     Problem const Tr = read_problem(opt.Tr_path);
+    std::cout << std::to_string(Tr.nr_field) << std::flush;
     std::cout << "done\n" << std::flush;
 
     std::cout << "initializing model..." << std::flush;
@@ -192,6 +196,17 @@ int main(int const argc, char const * const * const argv)
 
     if(opt.do_prediction)
         predict(Va, model, opt.Va_path+".prd");
+
+    if(opt.try_interaction)
+        for (uint32_t i = 0; i < 14; i++)
+        {
+            for (uint32_t j = i + 1; j < 14; j++)
+            {
+                Problem const Tr2 = read_problem(opt.Tr_path, i, j);
+                predict(Tr2, model, opt.Tr_path + "_" + std::to_string(i) + "_" + std::to_string(j) + ".prd");
+                delete &Tr2;
+            }
+        }
 
     return EXIT_SUCCESS;
 }

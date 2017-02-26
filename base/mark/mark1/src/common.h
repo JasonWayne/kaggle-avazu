@@ -24,6 +24,7 @@ struct Problem
 };
 
 Problem read_problem(std::string const path);
+Problem read_problem(std::string const path, int left, int right);
 
 uint32_t const kW_NODE_SIZE = 2;
 

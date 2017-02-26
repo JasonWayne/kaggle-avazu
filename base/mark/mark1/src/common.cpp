@@ -45,9 +45,17 @@ uint32_t get_nr_field(std::string const &path)
     return nr_field;
 }
 
+
 } //unamed namespace
 
+
+
 Problem read_problem(std::string const path)
+{
+    return read_problem(path, -1, -1);
+}
+
+Problem read_problem(std::string const path, int left, int right)
 {
     if(path.empty())
         return Problem(0, 0);
@@ -63,16 +71,24 @@ Problem read_problem(std::string const path)
         prob.Z[i] = std::string(z_char);
 
         char *y_char = strtok(nullptr, " \t");
-        float const y = (atoi(y_char)>0)? 1.0f : -1.0f;
+        float const y = (std::atoi(y_char)>0)? 1.0f : -1.0f;
         prob.Y[i] = y;
         for(; ; ++p)
         {
             char *idx_char = strtok(nullptr," \t");
             if(idx_char == nullptr || *idx_char == '\n')
                 break;
-            uint32_t idx = static_cast<uint32_t>(atoi(idx_char));
+            uint32_t idx = static_cast<uint32_t>(std::atoi(idx_char));
             prob.nr_feature = std::max(prob.nr_feature, idx);
             prob.J[p] = idx-1;
+            if (left != -1 && right != -1)
+            {
+                for (uint32_t i = 0; i < get_nr_field(path); i++) {
+                    if (left != i && right != i) {
+                        prob.J[p] = 9999999;
+                    }
+                }
+            }
         }
     }
 
@@ -98,7 +114,7 @@ argv_to_args(int const argc, char const * const * const argv)
     return args;
 }
 
-float predict(Problem const &prob, Model &model, 
+float predict(Problem const &prob, Model &model,
     std::string const &output_path)
 {
     FILE *f = nullptr;
