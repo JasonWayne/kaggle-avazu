@@ -208,7 +208,6 @@ int main(int const argc, char const * const * const argv)
             {
                 Problem const Tr2 = read_problem(opt.Tr_path, i, j);
                 predict(Tr2, model, opt.Tr_path + "_" + std::to_string(i) + "_" + std::to_string(j) + ".prd");
-                delete &Tr2;
             }
         }
 
