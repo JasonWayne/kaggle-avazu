@@ -20,9 +20,9 @@ for category in ['app', 'site']:
 # -r: learning rate
 # -s: number of threads
 # -t: iteration
-cmd = './mark1 -r 0.03 -s 1 -t 13 -i 1 va.r{size}.app.sp tr.r{size}.app.sp'.format(size=size)
+cmd = './mark1 -r 0.03 -s 1 -t 13 -i va.r{size}.app.sp tr.r{size}.app.sp'.format(size=size)
 subprocess.call(cmd.split())
-cmd = './mark1 -r 0.03 -s 1 -t 17 -i 1 va.r{size}.site.sp tr.r{size}.site.sp'.format(size=size)
+cmd = './mark1 -r 0.03 -s 1 -t 17 -i va.r{size}.site.sp tr.r{size}.site.sp'.format(size=size)
 subprocess.call(cmd.split())
 
 for category in ['app', 'site']:

@@ -83,8 +83,10 @@ Problem read_problem(std::string const path, int left, int right)
             prob.J[p] = idx-1;
             if (left != -1 && right != -1)
             {
-                for (uint32_t i = 0; i < get_nr_field(path); i++) {
-                    if (left != i && right != i) {
+                for (uint32_t i = 0; i < get_nr_field(path); i++)
+                {
+                    if (left != i && right != i)
+                    {
                         prob.J[p] = 9999999;
                     }
                 }
