@@ -2,6 +2,7 @@ from datetime import datetime
 from datetime import datetime
 from csv import DictReader
 from math import exp, log, sqrt
+import sys
 
 
 # TL; DR, the main training process starts on line: 282,
@@ -15,9 +16,10 @@ from math import exp, log, sqrt
 # A, paths
 # train = 'base/tr.r0.app.sp'
 # test = 'base/va.r0.app.sp'                 # path to testing file
-train = 'base/tr.r0.site.sp'
-test = 'base/va.r0.site.sp'                 # path to testing file
-submission = 'submission.csv'  # path of to be outputted submission file
+train = sys.argv[1]
+test = sys.argv[2]
+submission = sys.argv[3]  # path of to be outputted submission file
+print "train -> {1}, test -> {2}, submission -> {3}".format(train, test, submission)
 
 # B, model
 alpha = .1  # learning rate
@@ -28,7 +30,7 @@ L2 = 1.     # L2 regularization, larger value means more regularized
 # C, feature/hash trick
 # D = 2 ** 20              # number of weights to use
 D = 1000000
-do_interactions = False  # whether to enable poly2 feature interactions
+do_interactions = True  # whether to enable poly2 feature interactions
 
 # D, training/validation
 epoch = 3      # learn training data for N passes
@@ -305,7 +307,6 @@ for e in xrange(epoch):
 ##############################################################################
 
 with open(submission, 'w') as outfile:
-    outfile.write('id,click\n')
     for t, ID, x, y in data(test, D):
         p = learner.predict(x)
         outfile.write('%s,%s\n' % (ID, str(p)))
