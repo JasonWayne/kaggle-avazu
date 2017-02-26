@@ -84,6 +84,10 @@ Option parse_option(std::vector<std::string> const &args)
         {
             opt.do_prediction = false;
         }
+        else if(args[i].compare("-i") == 1)
+        {
+            opt.try_interaction = true;
+        }
         else
         {
             break;
