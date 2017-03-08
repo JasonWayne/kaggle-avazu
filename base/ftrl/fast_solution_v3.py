@@ -19,7 +19,7 @@ import sys
 train = sys.argv[1]
 test = sys.argv[2]
 submission = sys.argv[3]  # path of to be outputted submission file
-print "train -> {1}, test -> {2}, submission -> {3}".format(train, test, submission)
+print "train -> {0}, test -> {1}, submission -> {2}".format(train, test, submission)
 
 # B, model
 alpha = .1  # learning rate
