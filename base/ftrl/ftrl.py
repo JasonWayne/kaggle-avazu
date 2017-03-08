@@ -26,8 +26,8 @@ if arg_count < 3:
 train = sys.argv[1]
 test = sys.argv[2]
 submission = sys.argv[3]  # path of to be outputted submission file
-interaction = sys.argv[4] if arg_count > 3 else 'n'
-interaction_file_path = sys.argv[5] if arg_count > 4 else ''
+interaction = sys.argv[4] if arg_count > 4 else 'n'
+interaction_file_path = sys.argv[5] if arg_count > 5 else ''
 print "train -> {0}, test -> {1}, submission -> {2}".format(train, test, submission)
 
 # B, model
