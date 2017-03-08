@@ -13,6 +13,9 @@ import sys
 # parameters #################################################################
 ##############################################################################
 
+# train cmd
+# python base/ftrl/ftrl.py base/tr.r0.app.sp base/va.r0.app.sp submission_app.csv
+
 # A, paths
 # train = 'base/tr.r0.app.sp'
 # test = 'base/va.r0.app.sp'                 # path to testing file
