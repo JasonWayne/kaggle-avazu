@@ -14,14 +14,20 @@ import sys
 ##############################################################################
 
 # train cmd
-# python base/ftrl/ftrl.py base/tr.r0.app.sp base/va.r0.app.sp submission_app.csv
+# python base/ftrl/ftrl.py base/tr.r0.app.sp base/va.r0.app.sp submission_app.csv y
 
 # A, paths
 # train = 'base/tr.r0.app.sp'
 # test = 'base/va.r0.app.sp'                 # path to testing file
+arg_count = len(sys.argv)
+if arg_count < 3:
+    print "not enough args, quit"
+    exit(1)
 train = sys.argv[1]
 test = sys.argv[2]
 submission = sys.argv[3]  # path of to be outputted submission file
+interaction = sys.argv[4] if arg_count > 3 else 'n'
+interaction_file_path = sys.argv[5] if arg_count > 4 else ''
 print "train -> {0}, test -> {1}, submission -> {2}".format(train, test, submission)
 
 # B, model
@@ -33,11 +39,12 @@ L2 = 1.     # L2 regularization, larger value means more regularized
 # C, feature/hash trick
 # D = 2 ** 20              # number of weights to use
 D = 1000000
-do_interactions = True  # whether to enable poly2 feature interactions
+do_interactions = True if interaction == 'y' else False # whether to enable poly2 feature interactions
 
 # D, training/validation
 epoch = 3      # learn training data for N passes
 holdout = 100  # use every N training instance for holdout validation
+
 
 
 ##############################################################################
